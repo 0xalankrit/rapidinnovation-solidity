@@ -9,15 +9,15 @@ contract Types{
     // Value types includes :- boolean, integers, address ,contract types, fixed size byte array, etc
     // variables with value type are always copied when when passed to a function arguments.
 
-    bool a=true;
+    bool public a=true;
     // uint8 stores value 0 to 255 (2**8-1)
-    uint8 b=255; 
-    uint256 c=100;
+    uint8 public b=255; 
+    uint256 public c=100;
     // int (signed integer) stores value -128 to 127
-    int8 d=-128;
+    int8 public d=-128;
 
     // address variable holds a 20 byte ethereum address;
-    address e =0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
+    address public e =0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
     // payable address can receive etheres
     address payable f;
 

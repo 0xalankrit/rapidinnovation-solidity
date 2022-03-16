@@ -6,14 +6,14 @@ contract String{
     // can store data arbitary size
     // diff b/w string and bytes is that bytes store raw data in the form of byte
     // and string stores character (UTF-8 encoded)
-    string s= "hello";
+    string public s= "hello";
     // using string is expensive in terms of gas used
     // instead use fixed size bytes array ie bytes2,bytes4,bytes32
-    bytes32 b ="hello"; 
+    bytes32 public b ="hello"; 
 
     // bytes can be converted into string 
-    bytes data ="0x013";
-    string snew =string(data);
+    bytes public data ="0x013";
+    string publicsnew =string(data);
 
     // get the length of the string
     function length(string memory str) public pure returns(uint) {
