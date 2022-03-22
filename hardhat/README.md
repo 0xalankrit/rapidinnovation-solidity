@@ -1,4 +1,4 @@
-# ERC-20 tests structure
+# ERC-20 && ERC-721 tests structure
 
 ```
   Bluetoken
@@ -19,6 +19,18 @@
         ✔ Testing failing _burn function
 
 
-  11 passing (2s)
+  ABCNFT
+    Deployment
+      ✔ Should have correct name and symbol
+      ✔ Owner set properly
+    Mint NFT
+      ✔ Mint NFT
+    Token transfer
+      ✔ Testing Approve and getApproved function (60ms)
+      ✔ Testing setApprovalForAll and isApprovedForAll functions, listning to approvalToAll events
+      ✔ Testing Transfer NFT functions
+  
+  17 passing (2s)
+
 
 ```
