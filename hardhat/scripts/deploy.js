@@ -3,7 +3,7 @@
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-const hre = require("hardhat");
+const {ethers} = require("hardhat");
 require("@nomiclabs/hardhat-waffle");
 
 async function main() {
@@ -14,22 +14,39 @@ async function main() {
   // manually to make sure everything is compiled
   // await hre.run('compile');
 
-	const [deployer] = await hre.ethers.getSigners();
+	const [deployer] = await ethers.getSigners();
 
 	console.log("Deploying contracts with the account:",deployer.address);
 
-  // We get the contract to deploy
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
-
-  await greeter.deployed();
-
-  const Bluetoken =await hre.ethers.getContractFactory("Bluetoken");
+  // D E P L O Y I N G - E R C - 2 0
+  
+  const Bluetoken =await ethers.getContractFactory("Bluetoken");
   const bluetoken =await Bluetoken.deploy("Bluetoken","BT",0,1000);
   await bluetoken.deployed();
-
-  console.log("Greeter deployed to:", greeter.address);
   console.log("Bluetoken deployed to:", bluetoken.address);
+
+  // D E P L O Y I N G - E R C - 7 2 1  &  ....
+
+  const ERC721Holder =await ethers.getContractFactory("ERC721Holder");
+  const holder = await ERC721Holder.deploy();
+  await holder.deployed();
+  console.log("ERC721Holder deployed to:", holder.address);
+
+  const ERC165 =await ethers.getContractFactory("ERC165");
+  const erc165 = await ERC165.deploy();
+  await erc165.deployed();
+  console.log("ERC165 deployed to:", erc165.address);
+
+  const ERC721 =await ethers.getContractFactory("ERC721");
+  const erc721 = await ERC721.deploy("ABCNFT","ABCNFT");
+  await erc721.deployed();
+  console.log("ERC721 deployed to:", erc721.address);
+
+  const ABCNFT =await ethers.getContractFactory("ABCNFT");
+  const abcnft = await ABCNFT.deploy();
+  await abcnft.deployed();
+  console.log("ABCNFT deployed to:", abcnft.address);
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere
