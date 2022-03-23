@@ -1,15 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 import "./IERC721Receiver.sol";
+import "../ERC165/IERC165.sol";
 
-interface IERC165{
-    function supportsInterface(bytes4 interfaceId) external view returns(bool);
-}
-contract ERC165 is IERC165{
-    function supportsInterface(bytes4 interfaceId) virtual override public view returns(bool){
-        return  interfaceId== type(IERC165).interfaceId;
-    }
-}
 interface IERC721 is IERC165{
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
     event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);
