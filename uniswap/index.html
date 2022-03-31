@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+        type="application/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.2-rc.0/web3.min.js" 
+            integrity="sha512-REWiGZVmhU2S5eIov/DuNrsq4djWnPaAHSvXrbLLLaI0r/gW+wh1utIzxt0iB4IQLgXhNDj5mR0YMBjrkKhVMA==" 
+            crossorigin="anonymous" 
+            referrerpolicy="no-referrer">
+    </script>
+
+    <title>Document</title>
+    <style type="text/css">
+        #button{
+            font: 2em sans-serif;
+            margin: 1.5em;
+            padding: 0.5em;
+        }
+        #signMessage{
+            font: 2em sans-serif;
+            margin: 1.5em;
+            padding: 0.5em;
+        }
+        #signMessageWeb3{
+            font: 2em sans-serif;
+            margin: 1.5em;
+            padding: 0.5em;
+        }
+        #address{
+            font: 2em sans-serif;
+            margin: 0.5em;
+            padding: 0.5em;
+        }
+    </style>
+
+</head>
+<body onLoad="load()">
+    <span id ="address"></span><br>
+    <button id="button" onclick="connect()">Connect</button>
+    <button id="signMessage" onclick="signMessage()">Sign.message</button>
+    <button id="signMessageWeb3" onclick="signMessageWeb3()">Sign.message.Web3</button>
+    <script type="text/javascript">
+        let provider ;
+        let signer;
+        let account;
+        
+        function load(){
+            account= window.localStorage.getItem("account" )=== null 
+                ? undefined
+                : window.localStorage.getItem("account")  
+            if(account!=null){
+                const address = document.getElementById("address");
+                address.innerText =account;
+            }
+        }
+        async function connect(){
+            if(!window.ethereum){
+                window.alert("Please Install Metamask")         
+            }{
+                provider =new ethers.providers.Web3Provider(window.ethereum);
+                
+                window.web3 =new Web3(window.ethereum);
+                console.log(window.web3);
+                account =(await provider.send("eth_requestAccounts",[]))[0];
+                const address = document.getElementById("address");
+                address.innerText =account
+                // console.log(accounts); 
+                signer =provider.getSigner();
+
+                window.localStorage.setItem("account", account);
+                // console.log(signer);
+            }
+        }     
+        async function signMessage(){
+            if(signer != null){
+                const array =ethers.utils.toUtf8Bytes('Please sign this message');
+                const digest =ethers.utils.keccak256(array);
+                // console.log(digest);  
+                const sigature  =await signer.signMessage(digest);
+                // console.log(sigature);
+            }
+        }
+        async function signMessageWeb3(){
+            if(signer != null){
+                const messageHash = window.web3.utils.sha3('Please sign this message')
+                // console.log(messageHash);  //same
+                const sigature  =await window.web3.eth.personal.sign(messageHash,account);
+                // console.log(sigature);     //not same
+            }
+        }
+    </script>
+</body>
+</html>
+
+<!-- 0x4e03657aea45a94fc7d47ba826c8d667c0d1e6e33a64a036ec44f58fa12d6c45 -->
+<!-- 0xe75f20377d6574b67399702947cb56849d2e02f7112c1d021603346c345b37f8 -->
