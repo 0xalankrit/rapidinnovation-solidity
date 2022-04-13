@@ -3,23 +3,47 @@
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-const hre = require("hardhat");
+const {ethers}= require("hardhat");
 
 async function main() {
-  // Hardhat always runs the compile task when running scripts with its command
-  // line interface.
-  //
-  // If this script is run directly using `node` you may want to call compile
-  // manually to make sure everything is compiled
-  // await hre.run('compile');
 
-  // We get the contract to deploy
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
+  const [tokenAowner, tokenBowner] =await ethers.getSigners();
 
-  await greeter.deployed();
+  const TokenA = await ethers.getContractFactory("TokenA");
+  const tokenA = await TokenA.deploy();
+  await tokenA.deployed();
 
-  console.log("Greeter deployed to:", greeter.address);
+  const TokenB = await ethers.getContractFactory("TokenB");
+  const tokenB = await TokenB.deploy();
+  await tokenB.deployed();
+
+  const UniswapV2ERC20 = await ethers.getContractFactory("UniswapV2ERC20");
+  const uniswapV2ERC20 = await UniswapV2ERC20.deploy();
+  await uniswapV2ERC20.deployed();
+
+  const UniswapV2Factory = await ethers.getContractFactory("UniswapV2Factory");
+  const uniswapV2Factory = await UniswapV2Factory.deploy();
+  await uniswapV2Factory.deployed();
+
+  // const UniswapV2Pair = await ethers.getContractFactory("UniswapV2Pair");
+  // const uniswapV2Pair = await UniswapV2Pair.deploy();
+  // await uniswapV2Pair.deployed();
+  
+  console.log("TokenA deployed to:", tokenA.address);
+  console.log("TokenB deployed to:", tokenB.address);
+  console.log("UniswapV2ERC20 deployed to:", uniswapV2ERC20.address);
+  console.log("UniswapV2Factory deployed to:", uniswapV2Factory.address);
+  // console.log("UniswapV2Pair deployed to:", uniswapV2Pair.address);
+
+  const decimals = await tokenA.decimals();
+  await tokenA.mint(tokenAowner.address,1000*(10**decimals));
+  await tokenB.connect(tokenBowner).mint(tokenBowner.address,1000*(10**decimals));
+
+  console.log((await tokenB.totalSupply()))
+  console.log((await tokenA.totalSupply()))
+
+
+  
 }
 
 // We recommend this pattern to be able to use async/await everywhere
