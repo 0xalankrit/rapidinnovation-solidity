@@ -71,16 +71,7 @@ contract UniswapV2Twap{
             amountOut = price1Average.mul(1e18).decode144();
         }
     } 
-    // function getPrice(address token) external view returns(uint amountOut){
-    //     uint112 reserve0;
-    //     uint112 reserve1;
-    //     (reserve0, reserve1,)=IUniswapV2Pair(pair).getReserves();
-    //     if(token ==token0){
-    //         return (reserve0/reserve1);
-    //     } else if (token ==token1){
-    //         return (reserve1/reserve0);
-    //     }
-    // }
+
 }
 
 // 1425253188563876422791331875

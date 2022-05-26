@@ -36,5 +36,6 @@ module.exports = {
 };
 
 // npx hardhat node --fork https://speedy-nodes-nyc.moralis.io/3b50a8f528f7397fd9f310cf/eth/mainnet
+// npx hardhat node --fork https://speedy-nodes-nyc.moralis.io/3b50a8f528f7397fd9f310cf/bsc/mainnet
 
 // npx hardhat run scripts/twap.script.js --network rinkeby
